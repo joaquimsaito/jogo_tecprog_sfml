@@ -1,0 +1,31 @@
+# Visual Studio
+.vs/
+.vscode/
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+*.sln
+*.exe
+*.obj
+*.ilk
+*.pdb
+*.lib
+*.exp
+Debug/
+Release/
+x64/
+x86/
+.csproj
+.csproj.user
+
+# Outros
+*.o
+*.a
+*.so
+*.dll
+*.dylib
+Makefile
+.DS_Store
+*.swp
+*.tmp
+*.zip
