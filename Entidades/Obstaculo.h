@@ -1,17 +1,20 @@
 #pragma once
 
-#include"Jogador.h"
+#include "Entidade.h"
 
 namespace Entidades {
-	namespace Obstaculos {
-		class Obstaculo : public Entidade {
-		protected:
+    namespace Personagens {
+        class Jogador;
+    }
 
-		public:
-			Obstaculo() : Entidade() {};
-			virtual ~Obstaculo() {};
-			virtual void executar() = 0;
-			virtual void obstacularizar(Personagens::Jogador* pJ) = 0;
-		};
-	}
+    namespace Obstaculos {
+        class Obstaculo : public Entidade {
+        public:
+            Obstaculo() : Entidade() {}
+            ~Obstaculo() override = default;
+
+            void executar() override = 0;
+            virtual void obstacularizar(Personagens::Jogador* pJ) = 0;
+        };
+    }
 }

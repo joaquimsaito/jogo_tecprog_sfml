@@ -7,14 +7,17 @@
 
 class Jogo {
 private:
-	Gerenciadores::Gerenciador_Grafico GG; // composicao (como no diagrama): declarado primeiro, nasce antes dos demais
-	// Provisorio: no diagrama o Gerenciador_Colisoes pertence a Fase (#GC). Enquanto nao ha Fase, fica aqui.
-	Gerenciadores::Gerenciador_Colisoes GC;
-	Entidades::Personagens::Jogador* pJogador1;
-	// Provisorio: no diagrama seria um Obstaculo dentro da ListaEntidades da Fase.
-	Entidades::Chao* pChao;
+    Gerenciadores::Gerenciador_Grafico GG;
+    Gerenciadores::Gerenciador_Colisoes GC;
+    Entidades::Personagens::Jogador* pJogador1;
+    Entidades::Chao* pChao;
+
 public:
-	Jogo();
-	~Jogo();
-	void executar();
+    Jogo();
+    ~Jogo();
+
+    Jogo(const Jogo&) = delete;
+    Jogo& operator=(const Jogo&) = delete;
+
+    void executar();
 };
