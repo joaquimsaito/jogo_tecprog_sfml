@@ -5,7 +5,7 @@
 namespace Entidades {
     class Entidade : public Ente {
     protected:
-        sf::RectangleShape corpo;//sprite tem já: mudar3
+        sf::RectangleShape corpo;//sprite tem já: mudar3t
         sf::Vector2f posicao;
 
     public:
