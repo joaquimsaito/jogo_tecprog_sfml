@@ -1,25 +1,29 @@
 #pragma once
 
-#include "Entidades/Jogador.h"
-#include "Entidades/Chao.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
-#include "Gerenciadores/Gerenciador_Colisoes.h"
-#include "Entidades/Plataforma.h"
+
+namespace Entidades {
+    namespace Personagens {
+        class Jogador;
+    }
+}
+
+namespace Fases {
+    class Fase;
+}
 
 class Jogo {
 private:
     Gerenciadores::Gerenciador_Grafico GG;
-    Gerenciadores::Gerenciador_Colisoes GC;
-    Entidades::Personagens::Jogador* pJogador1;
-    Entidades::Chao* pChao;
-    Entidades::Obstaculos::Plataforma* pPlataforma;
+    Entidades::Personagens::Jogador* pJog1;
+    Fases::Fase* pFase; // provisorio: so a Fase Primeira por enquanto
+
+    Jogo(const Jogo&);
+    Jogo& operator=(const Jogo&);
 
 public:
     Jogo();
     ~Jogo();
-
-    Jogo(const Jogo&) = delete;
-    Jogo& operator=(const Jogo&) = delete;
 
     void executar();
 };

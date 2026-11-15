@@ -1,11 +1,12 @@
 #pragma once
 
+#include <SFML/Graphics.hpp>
 #include "../Ente.h"
 
 namespace Entidades {
     class Entidade : public Ente {
     protected:
-        sf::RectangleShape corpo;//sprite tem já: mudar3t
+        sf::RectangleShape corpo; // provisorio: sera substituido por sprite
         sf::Vector2f posicao;
 
     public:
@@ -24,6 +25,7 @@ namespace Entidades {
 
         const sf::RectangleShape& getCorpo() const { return corpo; }
         const sf::Vector2f getPosicao() const { return posicao; }
+        const sf::Vector2f getTamanho() const { return corpo.getSize(); }
 
         virtual void executar() = 0;
     };

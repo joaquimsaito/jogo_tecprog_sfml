@@ -8,6 +8,9 @@ namespace Entidades {
         setPosicao(pos);
     }
 
+    Chao::~Chao() {
+    }
+
     void Chao::executar() {
         // O chao e estatico; nao precisa atualizar sua posicao.
     }

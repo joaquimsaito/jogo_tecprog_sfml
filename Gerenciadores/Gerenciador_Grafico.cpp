@@ -49,7 +49,6 @@ void Gerenciador_Grafico::mostrar() {
 
 void Gerenciador_Grafico::atualizarTempo() {
 	dt = relogio.restart().asSeconds();
-	// Se a janela foi arrastada/travou, o dt explode e o jogador atravessaria o chao.
 	if (dt > 0.05f)
 		dt = 0.05f;
 }

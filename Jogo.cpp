@@ -1,43 +1,27 @@
 #include "Jogo.h"
 #include "Ente.h"
+#include "Entidades/Jogador.h"
+#include "Fases/FasePrimeira.h"
 
 Jogo::Jogo() :
     GG(),
-    GC(),
-    pJogador1(nullptr),
-    pChao(nullptr) {
-    Ente::setGerenciadorGrafico(&GG);
+    pJog1(nullptr),
+    pFase(nullptr) {
+    Ente::setGG(&GG);
 
-    pJogador1 = new Entidades::Personagens::Jogador();
-
-    const sf::Vector2u janela = GG.getTamanhoJanela();
-    pChao = new Entidades::Chao(
-        sf::Vector2f(0.f, static_cast<float>(janela.y) - 60.f),
-        sf::Vector2f(static_cast<float>(janela.x), 60.f));
-
-    GC.setPersonagemPrincipal(pJogador1);
-    GC.adicionarObstaculo(pChao);
-    pPlataforma = new Entidades::Obstaculos::Plataforma(
-        sf::Vector2f(
-            static_cast<float>(janela.x) * 0.55f,
-            static_cast<float>(janela.y) - 200.f
-        ),
-        sf::Vector2f(180.f, 20.f)
-    );
-    GC.adicionarObstaculo(pPlataforma);
+    pJog1 = new Entidades::Personagens::Jogador();
+    pFase = new Fases::FasePrimeira();
+    pFase->setJogador(pJog1);
 }
 
 Jogo::~Jogo() {
-    delete pJogador1;
-    pJogador1 = nullptr;
+    delete pFase;
+    pFase = nullptr;
 
-    delete pChao;
-    pChao = nullptr;
+    delete pJog1;
+    pJog1 = nullptr;
 
-    delete pPlataforma;
-    pPlataforma = nullptr;
-
-    Ente::setGerenciadorGrafico(nullptr);
+    Ente::setGG(nullptr);
 }
 
 void Jogo::executar() {
@@ -45,16 +29,8 @@ void Jogo::executar() {
         GG.tratarEventos();
         GG.atualizarTempo();
 
-        pJogador1->executar();
-        pChao->executar();
-        pPlataforma->executar();
-
-        GC.executar();
-
         GG.limpar();
-        pChao->desenhar();
-        pPlataforma->desenhar();
-        pJogador1->desenhar();
+        pFase->executar(); // executa, resolve colisoes e desenha
         GG.mostrar();
     }
 }

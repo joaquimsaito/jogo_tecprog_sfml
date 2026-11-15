@@ -1,40 +1,53 @@
 #include "ListaEntidades.h"
 
-using namespace Listas;
-using namespace Entidades;
+namespace Listas {
 
-ListaEntidades::ListaEntidades() {
-}
-
-ListaEntidades::~ListaEntidades() {
-}
-
-void ListaEntidades::executar() {
-    Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
-    while (pAux) {
-        pAux->getInfo()->executar();
-        pAux = pAux->getProx();
+    ListaEntidades::ListaEntidades() :
+        LEs() {
     }
-}
 
-void ListaEntidades::desenhar() {
-    auto pAux = LEs.getPrimeiro();
+    ListaEntidades::~ListaEntidades() {
+        limpar();
+    }
 
-    while (pAux != nullptr) {
-        Entidade* pEnt = pAux->getInfo();
-        if (pEnt) {
-            pEnt->desenhar();
+    void ListaEntidades::incluir(Entidades::Entidade* pE) {
+        if (pE)
+            LEs.incluir(pE);
+    }
+
+    void ListaEntidades::remover(Entidades::Entidade* pE) {
+        if (pE)
+            LEs.remover(pE);
+    }
+
+    void ListaEntidades::executar() {
+        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
+        while (pAux) {
+            Entidades::Entidade* pE = pAux->getInfo();
+            if (pE)
+                pE->executar();
+            pAux = pAux->getProx();
         }
-        pAux = pAux->getProx();
     }
-}
 
-void ListaEntidades::limpar() {
-    Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
-    while (pAux) {
-        Entidades::Entidade* pE = pAux->getInfo();
-        delete pE;
-        pAux = pAux->getProx();
+    void ListaEntidades::desenhar() {
+        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
+        while (pAux) {
+            Entidades::Entidade* pE = pAux->getInfo();
+            if (pE)
+                pE->desenhar();
+            pAux = pAux->getProx();
+        }
     }
-    LEs.limpar();
+
+    void ListaEntidades::limpar() {
+        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
+        while (pAux) {
+            Entidades::Entidade* pE = pAux->getInfo();
+            delete pE;
+            pAux = pAux->getProx();
+        }
+        LEs.limpar();
+    }
+
 }

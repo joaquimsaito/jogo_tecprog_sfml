@@ -1,39 +1,40 @@
 #include "Personagem.h"
-#include <algorithm>
+#include "../Gerenciadores/Gerenciador_Grafico.h"
 
 namespace Entidades {
     namespace Personagens {
 
-        Personagem::Personagem() :
+        const float Personagem::GRAVIDADE = 980.f;
+
+        Personagem::Personagem(const int vidas) :
             Entidade(),
+            num_vidas(vidas),
             velocidade(0.f, 0.f),
             aceleracao(0.f, 0.f),
             velocidadeMaxima(0.f, 0.f),
-            gravidade(980.f),
             noChao(false) {
         }
 
-        void Personagem::aplicaGravidade() {
-            const float dt = pGerenciadorGrafico
-                ? pGerenciadorGrafico->getDeltaTime()
-                : 0.f;
+        Personagem::~Personagem() {
+        }
+
+        void Personagem::integrar() {
+            const float dt = pGG ? pGG->getDeltaTime() : 0.f;
 
             velocidade.x += aceleracao.x * dt;
-            velocidade.y += (aceleracao.y + gravidade) * dt;
+            velocidade.y += (aceleracao.y + GRAVIDADE) * dt;
 
             if (velocidadeMaxima.x > 0.f) {
-                velocidade.x = std::clamp(velocidade.x,
-                    -velocidadeMaxima.x,
-                    velocidadeMaxima.x);
+                if (velocidade.x > velocidadeMaxima.x)  velocidade.x = velocidadeMaxima.x;
+                if (velocidade.x < -velocidadeMaxima.x) velocidade.x = -velocidadeMaxima.x;
             }
             if (velocidadeMaxima.y > 0.f) {
-                velocidade.y = std::clamp(velocidade.y,
-                    -velocidadeMaxima.y,
-                    velocidadeMaxima.y);
+                if (velocidade.y > velocidadeMaxima.y)  velocidade.y = velocidadeMaxima.y;
+                if (velocidade.y < -velocidadeMaxima.y) velocidade.y = -velocidadeMaxima.y;
             }
 
             setPosicao(posicao + velocidade * dt);
-            noChao = false;
+            noChao = false; // quem confirma o apoio eh o GC
         }
 
     }

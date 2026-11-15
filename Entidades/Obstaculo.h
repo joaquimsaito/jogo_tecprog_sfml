@@ -9,12 +9,18 @@ namespace Entidades {
 
     namespace Obstaculos {
         class Obstaculo : public Entidade {
-        public:
-            Obstaculo() : Entidade() {}
-            ~Obstaculo() override = default;
+        protected:
+            bool danoso;
 
-            void executar() override = 0;
-            virtual void obstacularizar(Personagens::Jogador* pJ) = 0;
+        public:
+            Obstaculo(const bool pDanoso = false);
+            virtual ~Obstaculo();
+
+            virtual void executar() = 0;
+
+            virtual void obstaculizar(Personagens::Jogador* pJ) = 0;
+
+            const bool getDanoso() const { return danoso; }
         };
     }
 }

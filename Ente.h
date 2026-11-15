@@ -1,22 +1,33 @@
 #pragma once
 
-#include "Gerenciadores/Gerenciador_Grafico.h"
+#include <SFML/Graphics/Drawable.hpp>
+
+namespace Gerenciadores {
+    class Gerenciador_Grafico;
+}
 
 class Ente {
-protected:
-    static Gerenciadores::Gerenciador_Grafico* pGerenciadorGrafico;
-	sf::Drawable* pFig;//
-public:
-	Ente() : pFig(nullptr) {};
-	virtual ~Ente() { pFig = nullptr; };
+private:
+    static int contadorId;
 
-	void desenhar() {
-		if(pGerenciadorGrafico)
-			pGerenciadorGrafico->desenharEnte(this);
-	}
-	static void setGerenciadorGrafico(Gerenciadores::Gerenciador_Grafico* pGG) {
-		pGerenciadorGrafico = pGG;
-	}
-	sf::Drawable* getFigura() const { return pFig; }//
-	virtual void executar() = 0;
+    //ponteiro pra figura da classe derivada (declarada e n definida)
+    Ente(const Ente&);
+    Ente& operator=(const Ente&);
+
+protected:
+    int id;
+    static Gerenciadores::Gerenciador_Grafico* pGG;
+    sf::Drawable* pFig;
+
+public:
+    Ente();
+    virtual ~Ente();
+
+    void desenhar();
+    static void setGG(Gerenciadores::Gerenciador_Grafico* pG);
+
+    sf::Drawable* getFigura() const; //utilitario
+    int getId() const;
+
+    virtual void executar() = 0;
 };

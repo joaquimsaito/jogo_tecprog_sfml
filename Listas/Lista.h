@@ -18,6 +18,9 @@ namespace Listas {
     private:
         Elemento* pPrimeiro;
         Elemento* pUltimo;
+
+        Lista(const Lista&);
+        Lista& operator=(const Lista&);
     public:
         Lista() : pPrimeiro(nullptr), pUltimo(nullptr) {};
         ~Lista() { limpar(); };
