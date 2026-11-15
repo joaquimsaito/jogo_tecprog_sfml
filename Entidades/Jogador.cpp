@@ -6,7 +6,7 @@ namespace Entidades {
 
         Jogador::Jogador() :
             Personagem(),
-            forcaPulo(450.f) {
+            forcaPulo(530.f) {
             corpo.setSize(sf::Vector2f(40.f, 60.f));
             corpo.setFillColor(sf::Color::Green);
             setVelocidadeMaxima(sf::Vector2f(300.f, 900.f));

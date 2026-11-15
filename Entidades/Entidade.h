@@ -5,12 +5,12 @@
 namespace Entidades {
     class Entidade : public Ente {
     protected:
-        sf::RectangleShape corpo;
+        sf::RectangleShape corpo;//sprite tem já: mudar3
         sf::Vector2f posicao;
 
     public:
         Entidade();
-        virtual ~Entidade() = default;
+        virtual ~Entidade();
 
         void setCorpo(const sf::RectangleShape& c) {
             corpo = c;

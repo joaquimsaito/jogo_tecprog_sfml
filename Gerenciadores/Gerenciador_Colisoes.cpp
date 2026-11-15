@@ -1,4 +1,6 @@
 #include "Gerenciador_Colisoes.h"
+#include "../Entidades/Obstaculo.h"
+#include "../Entidades/Jogador.h"
 #include <algorithm>
 
 namespace Gerenciadores {
@@ -122,6 +124,19 @@ namespace Gerenciadores {
                 calcularColisaoAABB(pPersonagemPrincipal, pObs);
             resolverColisaoPersonagemObstaculo(
                 pPersonagemPrincipal, pObs, colisao);
+
+            Entidades::Obstaculos::Obstaculo* pObstaculo =
+                dynamic_cast<Entidades::Obstaculos::Obstaculo*>(pObs);
+
+            if (pObstaculo) {
+                Entidades::Personagens::Jogador* pJogador =
+                    dynamic_cast<Entidades::Personagens::Jogador*>(pPersonagemPrincipal);
+
+                if (pJogador)
+                    pObstaculo->obstacularizar(pJogador);
+
+                continue;
+            }
         }
     }
 

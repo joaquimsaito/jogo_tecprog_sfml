@@ -17,6 +17,14 @@ Jogo::Jogo() :
 
     GC.setPersonagemPrincipal(pJogador1);
     GC.adicionarObstaculo(pChao);
+    pPlataforma = new Entidades::Obstaculos::Plataforma(
+        sf::Vector2f(
+            static_cast<float>(janela.x) * 0.55f,
+            static_cast<float>(janela.y) - 200.f
+        ),
+        sf::Vector2f(180.f, 20.f)
+    );
+    GC.adicionarObstaculo(pPlataforma);
 }
 
 Jogo::~Jogo() {
@@ -25,6 +33,9 @@ Jogo::~Jogo() {
 
     delete pChao;
     pChao = nullptr;
+
+    delete pPlataforma;
+    pPlataforma = nullptr;
 
     Ente::setGerenciadorGrafico(nullptr);
 }
@@ -36,11 +47,13 @@ void Jogo::executar() {
 
         pJogador1->executar();
         pChao->executar();
+        pPlataforma->executar();
 
         GC.executar();
 
         GG.limpar();
         pChao->desenhar();
+        pPlataforma->desenhar();
         pJogador1->desenhar();
         GG.mostrar();
     }

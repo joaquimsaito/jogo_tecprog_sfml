@@ -5,7 +5,7 @@
 class Ente {
 protected:
     static Gerenciadores::Gerenciador_Grafico* pGerenciadorGrafico;
-	sf::Drawable* pFig;
+	sf::Drawable* pFig;//
 public:
 	Ente() : pFig(nullptr) {};
 	virtual ~Ente() { pFig = nullptr; };
@@ -17,6 +17,6 @@ public:
 	static void setGerenciadorGrafico(Gerenciadores::Gerenciador_Grafico* pGG) {
 		pGerenciadorGrafico = pGG;
 	}
-	sf::Drawable* getFigura() const { return pFig; }
+	sf::Drawable* getFigura() const { return pFig; }//
 	virtual void executar() = 0;
 };

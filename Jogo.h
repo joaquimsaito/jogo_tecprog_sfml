@@ -4,6 +4,7 @@
 #include "Entidades/Chao.h"
 #include "Gerenciadores/Gerenciador_Grafico.h"
 #include "Gerenciadores/Gerenciador_Colisoes.h"
+#include "Entidades/Plataforma.h"
 
 class Jogo {
 private:
@@ -11,6 +12,7 @@ private:
     Gerenciadores::Gerenciador_Colisoes GC;
     Entidades::Personagens::Jogador* pJogador1;
     Entidades::Chao* pChao;
+    Entidades::Obstaculos::Plataforma* pPlataforma;
 
 public:
     Jogo();
