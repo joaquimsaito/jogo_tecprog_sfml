@@ -1,6 +1,6 @@
 #include "InimigoFacil.h"
 #include "Jogador.h"
-
+#include "../Gerenciadores/Gerenciador_Grafico.h"
 namespace Entidades {
     namespace Personagens {
 
@@ -8,7 +8,7 @@ namespace Entidades {
             Inimigo(1) {
             corpo.setSize(sf::Vector2f(40.f, 40.f));
             corpo.setFillColor(sf::Color(220, 30, 30));
-            setVelocidadeMaxima(sf::Vector2f(0.f, 900.f));
+            setVelocidadeMaxima(sf::Vector2f(150.f, 900.f));
         }
 
         InimigoFacil::~InimigoFacil() {
@@ -19,8 +19,25 @@ namespace Entidades {
         }
 
         void InimigoFacil::mover() {
-            // Parado por enquanto
-            velocidade.x = 0.f;
+
+            if (noChao && pGG) {
+
+                float limiteDireito = (float)pGG->getTamanhoJanela().x;
+
+                // Inverte a direcao nas extremidades
+                if (posicao.x <= 0.f)
+                    velocidade.x = velocidadeMaxima.x;
+
+                else if (posicao.x + getTamanho().x >= limiteDireito)
+                    velocidade.x = -velocidadeMaxima.x;
+
+                else if (velocidade.x == 0.f)
+                    velocidade.x = velocidadeMaxima.x;
+            }
+            else {
+                velocidade.x = 0.f;
+            }
+
             integrar();
         }
 

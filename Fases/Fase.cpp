@@ -44,13 +44,24 @@ namespace Fases {
     }
 
     void Fase::criarPlataformas() {
-        // provisorio
-        Entidades::Obstaculos::Plataforma* pPlat = new Entidades::Obstaculos::Plataforma(
-            sf::Vector2f(tamanhoMundo.x * 0.55f, tamanhoMundo.y - 200.f),
-            sf::Vector2f(180.f, 20.f));
+        const sf::Vector2f tamanho(180.f, 20.f);
 
-        lista_ents.incluir(pPlat);
-        GC.incluirObstaculo(pPlat);
+        const sf::Vector2f posicoes[4] = {
+            sf::Vector2f(tamanhoMundo.x * 0.05f,  tamanhoMundo.y - 170.f),
+            sf::Vector2f(tamanhoMundo.x * 0.275f, tamanhoMundo.y - 250.f),
+            sf::Vector2f(tamanhoMundo.x * 0.50f,  tamanhoMundo.y - 330.f),
+            sf::Vector2f(tamanhoMundo.x * 0.725f, tamanhoMundo.y - 410.f)
+        };
+
+        int quantidade = rand() % 4 + 3;
+
+        for (int i = 0; i < quantidade; i++) {
+            Entidades::Obstaculos::Plataforma* pPlat =
+                new Entidades::Obstaculos::Plataforma(posicoes[i], tamanho);
+
+            lista_ents.incluir(pPlat);
+            GC.incluirObstaculo(pPlat);
+        }
     }
 
     void Fase::criarInimFaceis() {
