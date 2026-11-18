@@ -9,7 +9,7 @@ namespace Entidades {
         // Inimigo 1 - Facil: por enquanto fica PARADO (so sofre gravidade).
         class InimigoFacil : public Inimigo {
         public:
-            InimigoFacil();
+            InimigoFacil(const sf::Vector2f& pos);
             ~InimigoFacil();
 
             void executar();

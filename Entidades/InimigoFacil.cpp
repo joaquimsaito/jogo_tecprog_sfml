@@ -4,13 +4,13 @@
 namespace Entidades {
     namespace Personagens {
 
-        InimigoFacil::InimigoFacil() :
+        InimigoFacil::InimigoFacil(const sf::Vector2f& pos) :
             Inimigo(1) {
             corpo.setSize(sf::Vector2f(40.f, 40.f));
             corpo.setFillColor(sf::Color(220, 30, 30));
             setVelocidadeMaxima(sf::Vector2f(150.f, 900.f));
+			setPosicao(pos);
         }
-
         InimigoFacil::~InimigoFacil() {
         }
 

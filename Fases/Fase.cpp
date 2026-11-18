@@ -65,13 +65,31 @@ namespace Fases {
     }
 
     void Fase::criarInimFaceis() {
+
+        const sf::Vector2f posicoes[4] = {
+            sf::Vector2f(250.f, 400.f),
+            sf::Vector2f(250.f, 500.f),
+            sf::Vector2f(300.f, 400.f),
+            sf::Vector2f(350.f, 500.f)
+        };
+        int quantidade = rand() % 4 + 3;
+
+            for (int i = 0; i < quantidade; i++) {
+                Entidades::Personagens::InimigoFacil* pInim =
+                    new Entidades::Personagens::InimigoFacil(posicoes[i]);
+                lista_ents.incluir(pInim);
+                GC.incluirInimigo(pInim);
+            };
+    }
+
+    /*void Fase::criarInimFaceis() {
         // um inimigo em posicao fixa por enquanto; cai ate o chao
         Entidades::Personagens::InimigoFacil* pInim = new Entidades::Personagens::InimigoFacil();
         pInim->setPosicao(sf::Vector2f(250.f, 400.f));
 
         lista_ents.incluir(pInim);
         GC.incluirInimigo(pInim);
-    }
+    }*/
 
     void Fase::criarCenario() {
         criarChao();
