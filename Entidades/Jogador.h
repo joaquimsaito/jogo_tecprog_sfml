@@ -15,6 +15,8 @@ namespace Entidades {
 
             float invulneravel; // segundos restantes apos tomar dano
 
+            int pontos; // decidimos divergir do diagrama e colocar pontos como PRIVATE ao invés de PROTECTED
+
             void processarEntrada();
 
         public:
@@ -27,7 +29,9 @@ namespace Entidades {
             void colidir(Inimigo* pIn);
             void sofrerDano();
 
-            const bool estaVivo() const;
+            int getPontos() const { return pontos; }
+            void somarPontos(const int valor) { pontos += valor; }
+
             void reiniciar(const sf::Vector2f& pos);
         };
     }

@@ -1,6 +1,7 @@
 #include "InimigoFacil.h"
 #include "Jogador.h"
 #include "../Gerenciadores/Gerenciador_Grafico.h"
+
 namespace Entidades {
     namespace Personagens {
 
