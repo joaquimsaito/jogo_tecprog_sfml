@@ -55,7 +55,7 @@ namespace Fases {
             sf::Vector2f(tamanhoMundo.x * 0.725f, tamanhoMundo.y - 410.f)
         };
 
-        int quantidade = rand() % 4 + 1;
+        int quantidade = rand() % 4 + 3;
 
         for (int i = 0; i < quantidade; i++) {
             Entidades::Obstaculos::Plataforma* pPlat =
@@ -68,20 +68,14 @@ namespace Fases {
 
 
     void Fase::criarInimFaceis() {
-        const sf::Vector2f posicoes[4] = {
-            sf::Vector2f(tamanhoMundo.x * 0.10f, 400.f),
-            sf::Vector2f(tamanhoMundo.x * 0.30f, 400.f),
-            sf::Vector2f(tamanhoMundo.x * 0.50f, 400.f),
-            sf::Vector2f(tamanhoMundo.x * 0.70f, 400.f)
-        };
-
-        const int quantidade = rand() % 2 + 3;
+        const int quantidade = rand() % 2 + 3; //atentar a usar max inimigos faceis, posteriormente
 
         for (int i = 0; i < quantidade; i++) {
             Entidades::Personagens::InimigoFacil* pInim =
-                new Entidades::Personagens::InimigoFacil();
+                new Entidades::Personagens::InimigoFacil(rand() % 5 + 1);
 
-            pInim->setPosicao(posicoes[i]);
+            const float x = tamanhoMundo.x * (i + 1) / (quantidade + 1);
+            pInim->setPosicao(sf::Vector2f(x, 400.f));
 
             lista_ents.incluir(pInim);
             GC.incluirInimigo(pInim);

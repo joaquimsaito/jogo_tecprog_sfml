@@ -5,7 +5,10 @@
 using namespace Gerenciadores;
 
 Gerenciador_Grafico::Gerenciador_Grafico() :
-	pJanela(new sf::RenderWindow(sf::VideoMode({ 800u, 600u }), "Jogo++")),
+	pJanela(new sf::RenderWindow(
+		sf::VideoMode::getDesktopMode(),
+		"Jogo++",
+		sf::State::Fullscreen)),
 	relogio(),
 	dt(0.f) {
 	pJanela->setFramerateLimit(60);

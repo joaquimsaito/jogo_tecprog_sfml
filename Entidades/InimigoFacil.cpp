@@ -5,13 +5,16 @@
 namespace Entidades {
     namespace Personagens {
 
-        InimigoFacil::InimigoFacil(const sf::Vector2f& pos) :
-            Inimigo(1) {
+        const float InimigoFacil::VEL_BASE = 100.f;
+        const float InimigoFacil::PASSO = 15.f;
+
+        InimigoFacil::InimigoFacil(const int nivelMaldade) :
+            Inimigo(nivelMaldade, 3) {
             corpo.setSize(sf::Vector2f(40.f, 40.f));
             corpo.setFillColor(sf::Color(220, 30, 30));
-            setVelocidadeMaxima(sf::Vector2f(150.f, 900.f));
-			setPosicao(pos);
+            setVelocidadeMaxima(sf::Vector2f(VEL_BASE + nivelMaldade * PASSO, 900.f));
         }
+
         InimigoFacil::~InimigoFacil() {
         }
 
@@ -25,7 +28,7 @@ namespace Entidades {
 
                 float limiteDireito = (float)pGG->getTamanhoJanela().x;
 
-                // Inverte a direcao nas extremidades
+                // inverte a direcao nas extremidades
                 if (posicao.x <= 0.f)
                     velocidade.x = velocidadeMaxima.x;
 

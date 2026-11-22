@@ -1,15 +1,15 @@
 #pragma once
 
 #include "Inimigo.h"
-#include "../Gerenciadores/Gerenciador_Grafico.h"
 
- 
 namespace Entidades {
     namespace Personagens {
-        // Inimigo 1 - Facil: por enquanto fica PARADO (so sofre gravidade).
         class InimigoFacil : public Inimigo {
+        private:
+            static const float VEL_BASE;
+            static const float PASSO; //ambos atributos pra velocidade do inimigo variar com base no nivel da maldade
         public:
-            InimigoFacil(const sf::Vector2f& pos);
+            InimigoFacil(const int nivelMaldade = 1);
             ~InimigoFacil();
 
             void executar();
