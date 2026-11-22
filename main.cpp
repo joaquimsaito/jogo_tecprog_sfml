@@ -3,7 +3,7 @@
 #include <ctime>
 
 int main() {
-	srand(time(0));
+	srand(time(NULL));
 	Jogo jogo;
 	jogo.executar();
 	return 0;
