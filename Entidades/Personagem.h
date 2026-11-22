@@ -17,6 +17,8 @@ namespace Entidades {
 
             // soma aceleracao + gravidade a velocidade e integra a posicao (usa o dt do jogo)
             void integrar();
+            void setAceleracao(const sf::Vector2f& a) { aceleracao = a; }
+            void setVelocidadeMaxima(const sf::Vector2f& vm) { velocidadeMaxima = vm; }
 
         public:
             Personagem(const int vidas = 1);
@@ -26,10 +28,9 @@ namespace Entidades {
             const sf::Vector2f getVelocidadeMaxima() const { return velocidadeMaxima; }
             const bool getNoChao() const { return noChao; }
             const int getNumVidas() const { return num_vidas; }
+            const bool estaVivo() const { return num_vidas > 0; }
 
             void setVelocidade(const sf::Vector2f& v) { velocidade = v; }
-            void setAceleracao(const sf::Vector2f& a) { aceleracao = a; }
-            void setVelocidadeMaxima(const sf::Vector2f& vm) { velocidadeMaxima = vm; }
             void setNoChao(const bool c) { noChao = c; }
 
             virtual void executar() = 0;

@@ -33,6 +33,27 @@ namespace Gerenciadores {
             LOs.push_back(po);
     }
 
+    std::vector<Entidades::Personagens::Inimigo*> Gerenciador_Colisoes::retirarInimigosMortos() {
+        std::vector<Entidades::Personagens::Inimigo*> mortos;
+        for (std::vector<Entidades::Personagens::Inimigo*>::iterator it = LIs.begin(); it != LIs.end();) {
+            if (!(*it)->estaVivo()) {
+                mortos.push_back(*it);
+                it = LIs.erase(it);
+            }
+            else
+                ++it;
+        }
+        return mortos;
+    }
+
+    int Gerenciador_Colisoes::getQuantidadeInimigos() const {
+        int quantidade = 0;
+        for (std::size_t i = 0; i < LIs.size(); ++i)
+            if (LIs[i]->estaVivo())
+                ++quantidade;
+        return quantidade;
+    }
+
     DadosColisao Gerenciador_Colisoes::calcularColisaoAABB(
         const Entidades::Entidade* pE1,
         const Entidades::Entidade* pE2
@@ -153,6 +174,8 @@ namespace Gerenciadores {
 
     void Gerenciador_Colisoes::tratarColisoesInimgsObstacs() {
         for (std::size_t i = 0; i < LIs.size(); i++) {
+            if (!LIs[i]->estaVivo())
+                continue;
             for (std::list<Entidades::Obstaculos::Obstaculo*>::iterator it = LOs.begin(); it != LOs.end(); ++it) {
                 const DadosColisao colisao = calcularColisaoAABB(LIs[i], *it);
                 resolverColisaoPersonagemSolido(LIs[i], *it, colisao);
@@ -170,7 +193,7 @@ namespace Gerenciadores {
             return;
 
         for (std::size_t i = 0; i < LIs.size(); i++) {
-            if (calcularColisaoAABB(pJog1, LIs[i]).houveColisao)
+            if (LIs[i]->estaVivo() && calcularColisaoAABB(pJog1, LIs[i]).houveColisao)
                 pJog1->colidir(LIs[i]);
         }
     }

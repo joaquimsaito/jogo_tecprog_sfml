@@ -26,13 +26,16 @@ namespace Fases {
         sf::Vector2f tamanhoMundo;
         sf::Vector2f posInicialJogador;
 
-        void criarChao();
         void criarInimFaceis();
         void criarPlataformas();
         void criarCenario(); // chao + obstaculos + inimigos
 
         virtual void criarInimigos() = 0;
         virtual void criarObstaculos() = 0;
+
+    private:
+        void removerInimigosMortos();
+        void criarChao();
 
     public:
         Fase();

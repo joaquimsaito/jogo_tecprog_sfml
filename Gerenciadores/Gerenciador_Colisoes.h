@@ -82,6 +82,9 @@ namespace Gerenciadores {
         void incluirInimigo(Entidades::Personagens::Inimigo* pi);
         void incluirObstaculo(Entidades::Obstaculos::Obstaculo* po);
 
+        std::vector<Entidades::Personagens::Inimigo*> retirarInimigosMortos();
+        int getQuantidadeInimigos() const;
+
         void executar();
     };
 }

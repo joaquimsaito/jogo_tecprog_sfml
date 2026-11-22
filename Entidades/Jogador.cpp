@@ -13,7 +13,8 @@ namespace Entidades {
 
         Jogador::Jogador() :
             Personagem(VIDAS_INICIAIS),
-            invulneravel(0.f) {
+            invulneravel(0.f),
+            pontos(0) {
             corpo.setSize(sf::Vector2f(40.f, 60.f));
             corpo.setFillColor(sf::Color::Green);
             setVelocidadeMaxima(sf::Vector2f(300.f, 900.f));
@@ -62,8 +63,23 @@ namespace Entidades {
         }
 
         void Jogador::colidir(Inimigo* pIn) {
-            if (pIn)
+            if (!pIn || !pIn->estaVivo())
+                return;
+
+            const float pes = posicao.y + getTamanho().y;
+            const float centroInimigo = pIn->getPosicao().y + pIn->getTamanho().y / 2.f;
+
+            if (pes < centroInimigo) {
+                if (velocidade.y > 0.f) {
+                    pIn->neutralizar();
+                    if (!pIn->estaVivo())
+                        somarPontos(pIn->getNivelMaldade() * 100);
+                    velocidade.y = -350.f;
+                }
+            }
+            else {
                 pIn->danificar(this);
+            }
         }
 
         void Jogador::sofrerDano() {
@@ -73,10 +89,6 @@ namespace Entidades {
             --num_vidas;
             invulneravel = TEMPO_INVULNERAVEL;
             velocidade.y = -300.f; //impulso
-        }
-
-        const bool Jogador::estaVivo() const {
-            return num_vidas > 0;
         }
 
         void Jogador::reiniciar(const sf::Vector2f& pos) {

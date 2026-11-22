@@ -43,29 +43,63 @@ namespace Fases {
         GC.setChao(pChao);
     }
 
-    void Fase::criarPlataformas() {
-        // provisorio
-        Entidades::Obstaculos::Plataforma* pPlat = new Entidades::Obstaculos::Plataforma(
-            sf::Vector2f(tamanhoMundo.x * 0.55f, tamanhoMundo.y - 200.f),
-            sf::Vector2f(180.f, 20.f));
 
-        lista_ents.incluir(pPlat);
-        GC.incluirObstaculo(pPlat);
+
+    void Fase::criarPlataformas() {
+        const sf::Vector2f tamanho(180.f, 20.f);
+
+        const sf::Vector2f posicoes[4] = {
+            sf::Vector2f(tamanhoMundo.x * 0.05f,  tamanhoMundo.y - 170.f),
+            sf::Vector2f(tamanhoMundo.x * 0.275f, tamanhoMundo.y - 250.f),
+            sf::Vector2f(tamanhoMundo.x * 0.50f,  tamanhoMundo.y - 330.f),
+            sf::Vector2f(tamanhoMundo.x * 0.725f, tamanhoMundo.y - 410.f)
+        };
+
+        int quantidade = rand() % 4 + 3;
+
+        for (int i = 0; i < quantidade; i++) {
+            Entidades::Obstaculos::Plataforma* pPlat =
+                new Entidades::Obstaculos::Plataforma(posicoes[i], tamanho);
+
+            lista_ents.incluir(pPlat);
+            GC.incluirObstaculo(pPlat);
+        }
     }
 
-    void Fase::criarInimFaceis() {
-        // um inimigo em posicao fixa por enquanto; cai ate o chao
-        Entidades::Personagens::InimigoFacil* pInim = new Entidades::Personagens::InimigoFacil();
-        pInim->setPosicao(sf::Vector2f(250.f, 400.f));
 
-        lista_ents.incluir(pInim);
-        GC.incluirInimigo(pInim);
+    void Fase::criarInimFaceis() {
+        const sf::Vector2f posicoes[4] = {
+            sf::Vector2f(tamanhoMundo.x * 0.10f, 400.f),
+            sf::Vector2f(tamanhoMundo.x * 0.30f, 400.f),
+            sf::Vector2f(tamanhoMundo.x * 0.50f, 400.f),
+            sf::Vector2f(tamanhoMundo.x * 0.70f, 400.f)
+        };
+
+        const int quantidade = rand() % 4 + 3;
+
+        for (int i = 0; i < quantidade; i++) {
+            Entidades::Personagens::InimigoFacil* pInim =
+                new Entidades::Personagens::InimigoFacil();
+
+            pInim->setPosicao(posicoes[i]);
+
+            lista_ents.incluir(pInim);
+            GC.incluirInimigo(pInim);
+        }
     }
 
     void Fase::criarCenario() {
         criarChao();
-        criarObstaculos(); // virtual: depende da fase concreta
-        criarInimigos(); // virtual: depende da fase concreta
+        criarObstaculos();
+        criarInimigos();
+    }
+
+    void Fase::removerInimigosMortos() {
+        std::vector<Entidades::Personagens::Inimigo*> mortos = GC.retirarInimigosMortos();
+        for (std::size_t i = 0; i < mortos.size(); ++i) {
+            lista_ents.remover(mortos[i]);
+            delete mortos[i];
+        }
     }
 
     void Fase::executar() {
