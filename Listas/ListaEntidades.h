@@ -1,26 +1,22 @@
 #pragma once
 
 #include "Lista.h"
-#include "../Entidades/Entidade.h"
+
+namespace Entidades { class Entidade; }
 
 namespace Listas {
-
-    // a ListaEntidades POSSUI as entidades incluidas
+    // a ListaEntidades POSSUI as entidades incluidas (a Fase eh dona das entidades, exceto o Jogador, que eh do Jogo)
     class ListaEntidades {
     private:
-        Lista<Entidades::Entidade*> LEs;
-
-        ListaEntidades(const ListaEntidades&);
-        ListaEntidades& operator=(const ListaEntidades&);
-
+        Listas::Lista<Entidades::Entidade> LEs;
     public:
         ListaEntidades();
         ~ListaEntidades();
 
         void incluir(Entidades::Entidade* pE);
-        void remover(Entidades::Entidade* pE); // retira da lista SEM deletar
         void executar();
+        // NOVO: Fase::executar() desenha depois de resolver as colisoes (a entidade nao se desenha dentro de executar()).
         void desenhar();
-        void limpar(); // retira e DELETA todas
+        void limpar(); // destroi todas as entidades e esvazia a lista
     };
 }

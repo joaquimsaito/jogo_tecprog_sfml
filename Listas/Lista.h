@@ -1,72 +1,86 @@
 #pragma once
 
 namespace Listas {
-    template <class TL>
-    class Lista {
-    public:
-        class Elemento {
-        private:
-            Elemento* pProx;
-            TL pInfo;
-        public:
-            Elemento(TL info) : pProx(nullptr), pInfo(info) {};
-            ~Elemento() {};
-            void setProx(Elemento* p) { pProx = p; };
-            Elemento* getProx() const { return pProx; };
-            TL getInfo() const { return pInfo; };
-        };
-    private:
-        Elemento* pPrimeiro;
-        Elemento* pUltimo;
+	template <class TL>
 
-        Lista(const Lista&);
-        Lista& operator=(const Lista&);
-    public:
-        Lista() : pPrimeiro(nullptr), pUltimo(nullptr) {};
-        ~Lista() { limpar(); };
-        void incluir(TL info) {
-            Elemento* pAux = new Elemento(info);
-            if (!pPrimeiro) {
-                pPrimeiro = pAux;
-                pUltimo = pAux;
-            }
-            else {
-                pUltimo->setProx(pAux);
-                pUltimo = pAux;
-            }
-        };
-        void remover(TL info) {
-            Elemento* pAux = pPrimeiro;
-            Elemento* pAnt = nullptr;
-            while (pAux) {
-                if (pAux->getInfo() == info) {
-                    if (pAux == pPrimeiro) {
-                        pPrimeiro = pAux->getProx();
-                    }
-                    else {
-                        pAnt->setProx(pAux->getProx());
-                    }
-                    if (pAux == pUltimo) {
-                        pUltimo = pAnt;
-                    }
-                    delete pAux;
-                    return;
-                }
-                pAnt = pAux;
-                pAux = pAux->getProx();
-            }
-        };
-        void limpar() {
-            Elemento* pAux = pPrimeiro;
-            while (pAux) {
-                Elemento* pDeletar = pAux;
-                pAux = pAux->getProx();
-                delete pDeletar;
-            }
-            pPrimeiro = nullptr;
-            pUltimo = nullptr;
-        };
-        Elemento* getPrimeiro() const { return pPrimeiro; };
-    };
-};
+	class Lista {
+	public:
+		// NOVO: Elemento vira gabarito proprio (UML: "TE : Class" aninhado em Lista); corrige o TE indeclarado.
+		template <class TE>
+		class Elemento {
+		private:
+			Elemento<TE>* pProx;
+			TE* pInfo; //TE precisa ser declarado de alguma forma, igual à TL (template <class TL>)?
+		public:
+			Elemento() :
+				pProx(nullptr),
+				pInfo(nullptr)
+			{
+				//...
+			};
+			~Elemento() {
+				//...
+				pProx = nullptr;
+				pInfo = nullptr;
+			};
 
+			void incluir(TE* pEl) {
+				//...
+				pInfo = pEl;
+			};
+			void setProx(Elemento<TE>* pEl) {
+				if (pEl) pProx = pEl;
+			}
+			Elemento<TE>* getProximo() const {
+				return pProx;
+			}
+			// NOVO: UML (Elemento tem pinfo); necessario para ListaEntidades percorrer.
+			TE* getInfo() const {
+				return pInfo;
+			}
+		};
+	private:
+		Elemento<TL>* pPrimeiro;
+		Elemento<TL>* pUltimo;
+	public:
+		Lista() :
+			pPrimeiro(nullptr),
+			pUltimo(nullptr)
+		{
+			//...
+		}
+		~Lista() {
+			//...
+			limpar();
+		}
+		void incluir(TL* pLis) {
+			//...
+			Elemento<TL>* pNovo = new Elemento<TL>();
+			pNovo->incluir(pLis);
+			if (!pPrimeiro) {
+				pPrimeiro = pNovo;
+				pUltimo = pNovo;
+			}
+			else {
+				pUltimo->setProx(pNovo);
+				pUltimo = pNovo;
+			}
+		};
+		void limpar() {
+			//...
+			Elemento<TL>* pAux = pPrimeiro;
+			while (pAux) {
+				Elemento<TL>* pProx = pAux->getProximo();
+				delete pAux; //libera so o elemento; quem possui a informacao decide se a destroi
+				pAux = pProx;
+			}
+			pPrimeiro = nullptr;
+			pUltimo = nullptr;
+		}
+		// NOVO: UML (Lista conhece Primeiro); permite percorrer a lista a partir de ListaEntidades.
+		Elemento<TL>* getPrimeiro() const {
+			return pPrimeiro;
+		}
+		//...
+	};
+}

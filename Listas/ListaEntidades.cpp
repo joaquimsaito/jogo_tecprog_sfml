@@ -1,53 +1,48 @@
 #include "ListaEntidades.h"
 
-namespace Listas {
+#include "../Entidades/Entidade.h"
 
-    ListaEntidades::ListaEntidades() :
-        LEs() {
-    }
+using namespace Listas;
 
-    ListaEntidades::~ListaEntidades() {
-        limpar();
-    }
+typedef Lista<Entidades::Entidade>::Elemento<Entidades::Entidade> ElementoEntidade;
 
-    void ListaEntidades::incluir(Entidades::Entidade* pE) {
-        if (pE)
-            LEs.incluir(pE);
-    }
+ListaEntidades::ListaEntidades() :
+	LEs()
+{
+}
 
-    void ListaEntidades::remover(Entidades::Entidade* pE) {
-        if (pE)
-            LEs.remover(pE);
-    }
+// NOVO: a lista eh dona das entidades que recebe: destroi cada uma ao ser destruida.
+ListaEntidades::~ListaEntidades() {
+	limpar();
+}
 
-    void ListaEntidades::executar() {
-        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
-        while (pAux) {
-            Entidades::Entidade* pE = pAux->getInfo();
-            if (pE)
-                pE->executar();
-            pAux = pAux->getProx();
-        }
-    }
+void ListaEntidades::incluir(Entidades::Entidade* pE) {
+	if (pE) LEs.incluir(pE);
+}
 
-    void ListaEntidades::desenhar() {
-        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
-        while (pAux) {
-            Entidades::Entidade* pE = pAux->getInfo();
-            if (pE)
-                pE->desenhar();
-            pAux = pAux->getProx();
-        }
-    }
+void ListaEntidades::executar() {
+	ElementoEntidade* pEl = LEs.getPrimeiro();
+	while (pEl) {
+		Entidades::Entidade* pE = pEl->getInfo();
+		if (pE) pE->executar();
+		pEl = pEl->getProximo();
+	}
+}
 
-    void ListaEntidades::limpar() {
-        Lista<Entidades::Entidade*>::Elemento* pAux = LEs.getPrimeiro();
-        while (pAux) {
-            Entidades::Entidade* pE = pAux->getInfo();
-            delete pE;
-            pAux = pAux->getProx();
-        }
-        LEs.limpar();
-    }
+void ListaEntidades::desenhar() {
+	ElementoEntidade* pEl = LEs.getPrimeiro();
+	while (pEl) {
+		Entidades::Entidade* pE = pEl->getInfo();
+		if (pE) pE->desenhar();
+		pEl = pEl->getProximo();
+	}
+}
 
+void ListaEntidades::limpar() {
+	ElementoEntidade* pEl = LEs.getPrimeiro();
+	while (pEl) {
+		delete pEl->getInfo();
+		pEl = pEl->getProximo();
+	}
+	LEs.limpar();
 }
