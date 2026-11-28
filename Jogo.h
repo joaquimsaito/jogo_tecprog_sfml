@@ -18,8 +18,6 @@ private:
     Entidades::Personagens::Jogador* pJog1;
     Fases::Fase* pFase; // provisorio: so a Fase Primeira por enquanto
 
-    Jogo(const Jogo&);
-    Jogo& operator=(const Jogo&);
 
 public:
     Jogo();

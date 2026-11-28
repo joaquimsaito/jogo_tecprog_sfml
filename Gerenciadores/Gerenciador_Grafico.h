@@ -10,9 +10,6 @@ namespace Gerenciadores {
 		sf::Clock relogio;
 		float dt;
 
-		// possui a janela
-		Gerenciador_Grafico(const Gerenciador_Grafico&);
-		Gerenciador_Grafico& operator=(const Gerenciador_Grafico&);
 	public:
 		Gerenciador_Grafico();
 		~Gerenciador_Grafico();

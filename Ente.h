@@ -2,32 +2,28 @@
 
 #include <SFML/Graphics/Drawable.hpp>
 
-namespace Gerenciadores {
-    class Gerenciador_Grafico;
-}
+namespace Gerenciadores { class Gerenciador_Grafico; }
 
 class Ente {
 private:
-    static int contadorId;
-
-    //ponteiro pra figura da classe derivada (declarada e n definida)
-    Ente(const Ente&);
-    Ente& operator=(const Ente&);
+	static int contadorId;
 
 protected:
-    int id;
-    static Gerenciadores::Gerenciador_Grafico* pGG;
-    sf::Drawable* pFig;
+	int id;
+	static Gerenciadores::Gerenciador_Grafico* pGG;
+	sf::Drawable* pFig;
 
+	// NOVO: dt fica no Gerenciador_Grafico (decisao 1, opcao A); Ente repassa a leitura sem exigir parametro em executar() (UML).
+	const float getDt() const;
 public:
-    Ente();
-    virtual ~Ente();
+	Ente();
+	virtual ~Ente();
 
-    void desenhar();
-    static void setGG(Gerenciadores::Gerenciador_Grafico* pG);
+	static void setGG(Gerenciadores::Gerenciador_Grafico* pG);
 
-    sf::Drawable* getFigura() const; //utilitario
-    int getId() const;
+	sf::Drawable* getFigura() const;
+	int getId() const;
 
-    virtual void executar() = 0;
+	void desenhar();
+	virtual void executar() = 0;
 };

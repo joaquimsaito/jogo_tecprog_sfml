@@ -2,6 +2,7 @@
 
 #include <list>
 #include <vector>
+#include <SFML/System/Vector2.hpp>
 
 namespace Entidades {
     class Entidade;
@@ -19,6 +20,7 @@ namespace Entidades {
 namespace Gerenciadores {
 
     // achei uma solucao elegante e organizada usar struct
+    // NOVO: justificativa - calcularColisaoAABB() precisa devolver mais de um dado (houve colisao? quanto se sobrepoe em cada eixo?); a struct evita tres parametros de saida por referencia.
     struct DadosColisao {
         bool houveColisao;
         float sobreposicaoX;
@@ -39,51 +41,35 @@ namespace Gerenciadores {
 
         Entidades::Chao* pChao; // excecao ao diagrama
 
-        float larguraMundo; // informado pela Fase
+        // NOVO: tamanho do mundo (informado pela Fase) para limitar personagens e descartar inimigos que cairam (comentario do Zlurp: "limites do mundo").
+        sf::Vector2f limitesMundo;
 
+        // so DETECTA: a resolucao fica em Obstaculo::bloquear()/obstaculizar(), Jogador::colidir() e Inimigo::danificar()
         DadosColisao calcularColisaoAABB(
             const Entidades::Entidade* pE1,
             const Entidades::Entidade* pE2
         ) const;
 
-        std::vector<Entidades::Personagens::Personagem*> coletarPersonagens() const;
-
-        void resolverColisaoPersonagemSolido(
-            Entidades::Personagens::Personagem* pPer,
-            const Entidades::Entidade* pSolido,
-            const DadosColisao& colisao
-        );
-
-        void resolverColisaoVertical(
-            Entidades::Personagens::Personagem* pPer,
-            const Entidades::Entidade* pSolido,
-            const DadosColisao& colisao
-        );
-
-        void resolverColisaoHorizontal(
-            Entidades::Personagens::Personagem* pPer,
-            const Entidades::Entidade* pSolido,
-            const DadosColisao& colisao
-        );
+        // NOVO: Req. 9 - o chao (entidade, nao obstaculo) segura jogador e inimigos sob a gravidade.
+        void pousarNoChao(Entidades::Personagens::Personagem* pPer);
 
         void tratarColisoesJogsObstacs();
         void tratarColisoesJogsInimgs();
         void tratarColisoesInimgsObstacs();
         void tratarLimitesDoMundo();
+        // NOVO: decisao 5 - inimigo neutralizado que saiu do mundo pela base deixa de ser considerado (segue na lista da Fase).
+        void descartarInimigosCaidos();
 
     public:
         Gerenciador_Colisoes();
         ~Gerenciador_Colisoes();
 
-        void setJogador(Entidades::Personagens::Jogador* pJ) { pJog1 = pJ; }
-        void setChao(Entidades::Chao* pC) { pChao = pC; }
-        void setLarguraMundo(const float largura) { larguraMundo = largura; }
+        void setJogador(Entidades::Personagens::Jogador* pJ);
+        void setChao(Entidades::Chao* pC);
+        void setLimitesMundo(const sf::Vector2f& limites);
 
         void incluirInimigo(Entidades::Personagens::Inimigo* pi);
         void incluirObstaculo(Entidades::Obstaculos::Obstaculo* po);
-
-        std::vector<Entidades::Personagens::Inimigo*> retirarInimigosMortos();
-        int getQuantidadeInimigos() const;
 
         void executar();
     };

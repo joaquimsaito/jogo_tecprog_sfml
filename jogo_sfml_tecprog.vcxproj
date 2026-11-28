@@ -139,12 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Entidades\Bog.h" />
     <ClInclude Include="Entidades\Chao.h" />
     <ClInclude Include="Ente.h" />
     <ClInclude Include="Entidades\Entidade.h" />
     <ClInclude Include="Entidades\Inimigo.h" />
-    <ClInclude Include="Entidades\InimigoFacil.h" />
     <ClInclude Include="Entidades\Plataforma.h" />
+    <ClInclude Include="Entidades\Zlurp.h" />
     <ClInclude Include="Fases\Fase.h" />
     <ClInclude Include="Fases\FasePrimeira.h" />
     <ClInclude Include="Gerenciadores\Gerenciador_Colisoes.h" />
@@ -157,12 +158,13 @@
     <ClInclude Include="Listas\ListaEntidades.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Entidades\Bog.cpp" />
     <ClCompile Include="Entidades\Chao.cpp" />
     <ClCompile Include="Ente.cpp" />
     <ClCompile Include="Entidades\Entidade.cpp" />
     <ClCompile Include="Entidades\Inimigo.cpp" />
-    <ClCompile Include="Entidades\InimigoFacil.cpp" />
     <ClCompile Include="Entidades\Plataforma.cpp" />
+    <ClCompile Include="Entidades\Zlurp.cpp" />
     <ClCompile Include="Fases\Fase.cpp" />
     <ClCompile Include="Fases\FasePrimeira.cpp" />
     <ClCompile Include="Gerenciadores\Gerenciador_Colisoes.cpp" />

@@ -23,6 +23,8 @@ namespace Fases {
         // o Jogador ta pertencendo ao Jogo; a Fase so conhece ele (N deleta)
         Entidades::Personagens::Jogador* pJog1;
 
+        Entidades::Chao* pChao;
+
         sf::Vector2f tamanhoMundo;
         sf::Vector2f posInicialJogador;
 
@@ -34,7 +36,6 @@ namespace Fases {
         virtual void criarObstaculos() = 0;
 
     private:
-        void removerInimigosMortos();
         void criarChao();
 
     public:

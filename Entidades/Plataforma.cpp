@@ -1,24 +1,25 @@
 #include "Plataforma.h"
+#include "Jogador.h"
 
-namespace Entidades {
-    namespace Obstaculos {
+using namespace Entidades::Obstaculos;
 
-        Plataforma::Plataforma(const sf::Vector2f& pos, const sf::Vector2f& tam) :
-            Obstaculo(false) {
-            corpo.setSize(tam);
-            corpo.setFillColor(sf::Color(120, 120, 120));
-            setPosicao(pos);
-        }
+Plataforma::Plataforma(const sf::Vector2f& pos, const sf::Vector2f& tam) :
+	Obstaculo(false)
+{
+	corpo.setSize(tam);
+	corpo.setFillColor(sf::Color(120, 120, 120));
+	setPosicao(pos);
+}
 
-        Plataforma::~Plataforma() {
-        }
+Plataforma::~Plataforma() {}
 
-        void Plataforma::executar() {
-        }
 
-        void Plataforma::obstaculizar(Personagens::Jogador* pJ) {
-            // a definir
-        }
+void Plataforma::executar() {
+	// a definir na etapa 4 (piscar, sumir e reaparecer)
+}
 
-    }
+void Plataforma::obstaculizar(Personagens::Jogador* pJ) {
+	//a plataforma deve impedir que o jogador atravesse ela
+	if (!pJ || !ativo) return;
+	bloquear(pJ);
 }

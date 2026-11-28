@@ -22,6 +22,12 @@ void Ente::setGG(Gerenciadores::Gerenciador_Grafico* pG) {
     pGG = pG;
 }
 
+const float Ente::getDt() const {
+    if (pGG)
+        return pGG->getDeltaTime();
+    return 0.f;
+}
+
 sf::Drawable* Ente::getFigura() const {
     return pFig;
 }
